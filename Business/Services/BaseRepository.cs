@@ -11,9 +11,9 @@ namespace Business.Services
 {
     public class BaseRepository<T> : IRepository<T> where T : class, IEntity, new()
     {
-        private readonly ApplicationDbContext _context;
+        private readonly RealEstateDbContext _context;
         private DbSet<T> _entities;
-        public BaseRepository(ApplicationDbContext applicationDbContext)
+        public BaseRepository(RealEstateDbContext applicationDbContext)
         {
             _context = applicationDbContext;
             _entities = applicationDbContext.Set<T>();

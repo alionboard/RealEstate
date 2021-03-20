@@ -9,7 +9,7 @@ namespace Business.Services
 {
     public class CustomerManager : BaseRepository<Customer>, ICustomerRepository
     {
-        public CustomerManager(ApplicationDbContext context) : base(context)
+        public CustomerManager(RealEstateDbContext context) : base(context)
         {
 
         }

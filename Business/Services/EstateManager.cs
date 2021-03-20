@@ -9,7 +9,7 @@ namespace Business.Services
 {
     public class EstateManager : BaseRepository<Estate>, IEstateRepository
     {
-        public EstateManager(ApplicationDbContext context) : base(context)
+        public EstateManager(RealEstateDbContext context) : base(context)
         {
 
         }

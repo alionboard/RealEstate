@@ -12,17 +12,8 @@ namespace Data.Entities.Concrete
         public string HousePhoneNumber { get; set; }
         public string MobileNumber { get; set; }
         public string Email { get; set; }
-        public IEnumerable<CustomerType> CustomerType { get; set; }
+        public virtual IEnumerable<CustomerType> CustomerType { get; set; }
         public virtual IEnumerable<Estate> Estates { get; set; }
-    }
-
-
-    public enum CustomerType
-    {
-        Buy = 1,
-        Sell = 2,
-        LeaseOut = 3,
-        LeaseIn = 4
     }
 
 }

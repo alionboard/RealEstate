@@ -9,7 +9,7 @@ namespace Business.Services
 {
     public class WorkplaceManager : BaseRepository<Workplace>, IWorkPlaceRepository
     {
-        public WorkplaceManager(ApplicationDbContext context) : base(context)
+        public WorkplaceManager(RealEstateDbContext context) : base(context)
         {
 
         }

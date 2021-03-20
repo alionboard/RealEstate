@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UI.Data;
+using Data.Context;
+using Business.Repositories;
+using Business.Services;
 
 namespace UI
 {
@@ -27,11 +30,21 @@ namespace UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<RealEstateDbContext>();
+            services.AddDbContext<RealEstateDbContext>(options =>
+            options.UseSqlServer("server=(localdb)\\mssqllocaldb;database=RealEstateDb;integrated security=true; MultipleActiveResultSets=True", x => x.MigrationsAssembly("Data")));
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddScoped<IEstateRepository,EstateManager>();
+            //services.AddScoped<IWorkPlaceRepository,WorkplaceManager>();
+            //services.AddScoped<ICustomerRepository,CustomerManager>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

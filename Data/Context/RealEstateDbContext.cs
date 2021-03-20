@@ -6,12 +6,13 @@ using System.Text;
 
 namespace Data.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class RealEstateDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
+        public RealEstateDbContext(DbContextOptions<RealEstateDbContext> options):base(options)
         {
 
         }
+
 
         public virtual DbSet<Estate> Estates { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
