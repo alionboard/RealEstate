@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UI.Areas.Identity.Pages.Account
 {
-    [Authorize]
+    [AllowAnonymous]
     public class LockoutModel : PageModel
     {
         public void OnGet()

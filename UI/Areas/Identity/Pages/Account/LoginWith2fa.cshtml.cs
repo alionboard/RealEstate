@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace UI.Areas.Identity.Pages.Account
 {
-    [Authorize]
+    [AllowAnonymous]
     public class LoginWith2faModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

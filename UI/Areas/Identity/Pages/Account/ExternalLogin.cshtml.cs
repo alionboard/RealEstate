@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace UI.Areas.Identity.Pages.Account
 {
-    [Authorize]
+    [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

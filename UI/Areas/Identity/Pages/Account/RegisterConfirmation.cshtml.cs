@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace UI.Areas.Identity.Pages.Account
 {
-    [Authorize]
+    [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;

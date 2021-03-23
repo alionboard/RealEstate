@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UI.Areas.Identity.Pages.Account
 {
-    [Authorize]
+    [AllowAnonymous]
     public class ResetPasswordConfirmationModel : PageModel
     {
         public void OnGet()
