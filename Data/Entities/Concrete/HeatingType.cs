@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Data.Entities.Concrete
 {
+    [Table("HeatingTypes")]
+
     public class HeatingType
     {
         public int Id { get; set; }

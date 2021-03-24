@@ -16,5 +16,10 @@ namespace Data.Context
         public virtual DbSet<Estate> Estates { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Workplace> Workplaces { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.SeedCityDistrict();
+        }
     }
 }
