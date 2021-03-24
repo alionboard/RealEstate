@@ -18,6 +18,11 @@ namespace Data.Entities.Concrete
         public virtual HeatingType HeatingType { get; set; }
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
+        public int CityId { get; set; }
+        public virtual City City { get; set; }
+        public int DistrictId { get; set; }
+        public virtual District District { get; set; }
+        public string Address { get; set; }
     }
 
 }
