@@ -2,77 +2,10 @@
 
 namespace Data.Migrations
 {
-    public partial class CityDistrictSeeder : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CustomerType_Customers_CustomerId",
-                table: "CustomerType");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Estates_EstateType_EstateTypeId",
-                table: "Estates");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Estates_HeatingType_HeatingTypeId",
-                table: "Estates");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_HeatingType",
-                table: "HeatingType");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_EstateType",
-                table: "EstateType");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_CustomerType",
-                table: "CustomerType");
-
-            migrationBuilder.RenameTable(
-                name: "HeatingType",
-                newName: "HeatingTypes");
-
-            migrationBuilder.RenameTable(
-                name: "EstateType",
-                newName: "EstateTypes");
-
-            migrationBuilder.RenameTable(
-                name: "CustomerType",
-                newName: "CustomerTypes");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_CustomerType_CustomerId",
-                table: "CustomerTypes",
-                newName: "IX_CustomerTypes_CustomerId");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Address",
-                table: "Estates",
-                nullable: true);
-
-            migrationBuilder.AddColumn<int>(
-                name: "DistrictId",
-                table: "Estates",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_HeatingTypes",
-                table: "HeatingTypes",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_EstateTypes",
-                table: "EstateTypes",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_CustomerTypes",
-                table: "CustomerTypes",
-                column: "Id");
-
             migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
@@ -84,6 +17,79 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Fullname = table.Column<string>(nullable: true),
+                    HousePhoneNumber = table.Column<string>(nullable: true),
+                    MobileNumber = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EstateTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EstateTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HeatingTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HeatingTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Workplaces",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppUserId = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    AuthorizedPerson = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<int>(nullable: false),
+                    FaxNumber = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Workplaces", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,32 +112,103 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CustomerTypeCustomer",
+                columns: table => new
+                {
+                    CustomerTypeId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerTypeCustomer", x => new { x.CustomerId, x.CustomerTypeId });
+                    table.ForeignKey(
+                        name: "FK_CustomerTypeCustomer_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CustomerTypeCustomer_CustomerTypes_CustomerTypeId",
+                        column: x => x.CustomerTypeId,
+                        principalTable: "CustomerTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Estates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SquareMeter = table.Column<double>(nullable: false),
+                    NumberOfRooms = table.Column<int>(nullable: false),
+                    Floor = table.Column<int>(nullable: false),
+                    TotalNumberOfBuildingFloors = table.Column<int>(nullable: false),
+                    EstateTypeId = table.Column<int>(nullable: false),
+                    HeatingTypeId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
+                    DistrictId = table.Column<int>(nullable: false),
+                    Address = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Estates_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Estates_Districts_DistrictId",
+                        column: x => x.DistrictId,
+                        principalTable: "Districts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Estates_EstateTypes_EstateTypeId",
+                        column: x => x.EstateTypeId,
+                        principalTable: "EstateTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Estates_HeatingTypes_HeatingTypeId",
+                        column: x => x.HeatingTypeId,
+                        principalTable: "HeatingTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Cities",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
                     { 1, "Adana" },
+                    { 60, "Tokat" },
+                    { 59, "Tekirdağ" },
                     { 58, "Sivas" },
                     { 57, "Sinop" },
                     { 56, "Siirt" },
                     { 55, "Samsun" },
                     { 54, "Sakarya" },
+                    { 61, "Trabzon" },
                     { 53, "Rize" },
-                    { 52, "Ordu" },
-                    { 59, "Tekirdağ" },
                     { 51, "Niğde" },
+                    { 50, "Nevşehir" },
                     { 49, "Muş" },
                     { 48, "Muğla" },
                     { 47, "Mardin" },
                     { 46, "K.Maraş" },
                     { 45, "Manisa" },
-                    { 44, "Malatya" },
-                    { 43, "Kütahya" },
-                    { 50, "Nevşehir" },
-                    { 60, "Tokat" },
-                    { 61, "Trabzon" },
+                    { 52, "Ordu" },
                     { 62, "Tunceli" },
+                    { 63, "Şanlıurfa" },
+                    { 64, "Uşak" },
+                    { 81, "Düzce" },
+                    { 80, "Osmaniye" },
                     { 79, "Kilis" },
                     { 78, "Karabük" },
                     { 77, "Yalova" },
@@ -147,12 +224,11 @@ namespace Data.Migrations
                     { 67, "Zonguldak" },
                     { 66, "Yozgat" },
                     { 65, "Van" },
-                    { 64, "Uşak" },
-                    { 63, "Şanlıurfa" },
+                    { 44, "Malatya" },
                     { 42, "Konya" },
-                    { 80, "Osmaniye" },
-                    { 41, "Kocaeli" },
-                    { 39, "Kırklareli" },
+                    { 43, "Kütahya" },
+                    { 40, "Kırşehir" },
+                    { 18, "Çankırı" },
                     { 17, "Çanakkale" },
                     { 16, "Bursa" },
                     { 15, "Burdur" },
@@ -160,8 +236,8 @@ namespace Data.Migrations
                     { 13, "Bitlis" },
                     { 12, "Bingöl" },
                     { 11, "Bilecik" },
-                    { 18, "Çankırı" },
                     { 10, "Balıkesir" },
+                    { 9, "Aydın" },
                     { 8, "Artvin" },
                     { 7, "Antalya" },
                     { 6, "Ankara" },
@@ -169,18 +245,19 @@ namespace Data.Migrations
                     { 4, "Ağrı" },
                     { 3, "Afyon" },
                     { 2, "Adıyaman" },
-                    { 9, "Aydın" },
                     { 19, "Çorum" },
+                    { 41, "Kocaeli" },
                     { 20, "Denizli" },
-                    { 21, "Diyarbakır" },
+                    { 22, "Edirne" },
+                    { 39, "Kırklareli" },
                     { 38, "Kayseri" },
                     { 37, "Kastamonu" },
                     { 36, "Kars" },
                     { 35, "İzmir" },
                     { 34, "İstanbul" },
-                    { 33, "Mersin" },
+                    { 21, "Diyarbakır" },
                     { 32, "Isparta" },
-                    { 31, "Hatay" },
+                    { 33, "Mersin" },
                     { 30, "Hakkari" },
                     { 29, "Gümüşhane" },
                     { 28, "Giresun" },
@@ -189,9 +266,18 @@ namespace Data.Migrations
                     { 25, "Erzurum" },
                     { 24, "Erzincan" },
                     { 23, "Elazığ" },
-                    { 22, "Edirne" },
-                    { 40, "Kırşehir" },
-                    { 81, "Düzce" }
+                    { 31, "Hatay" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CustomerTypes",
+                columns: new[] { "Id", "Type" },
+                values: new object[,]
+                {
+                    { 3, "Kiraya Veren" },
+                    { 1, "Satıcı" },
+                    { 2, "Alıcı" },
+                    { 4, "Kiracı" }
                 });
 
             migrationBuilder.InsertData(
@@ -1120,151 +1206,64 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Estates_DistrictId",
-                table: "Estates",
-                column: "DistrictId");
+                name: "IX_CustomerTypeCustomer_CustomerTypeId",
+                table: "CustomerTypeCustomer",
+                column: "CustomerTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Districts_CityId",
                 table: "Districts",
                 column: "CityId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_CustomerTypes_Customers_CustomerId",
-                table: "CustomerTypes",
-                column: "CustomerId",
-                principalTable: "Customers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Estates_Districts_DistrictId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Estates_CustomerId",
                 table: "Estates",
-                column: "DistrictId",
-                principalTable: "Districts",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "CustomerId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Estates_EstateTypes_EstateTypeId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Estates_DistrictId",
                 table: "Estates",
-                column: "EstateTypeId",
-                principalTable: "EstateTypes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "DistrictId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Estates_HeatingTypes_HeatingTypeId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Estates_EstateTypeId",
                 table: "Estates",
-                column: "HeatingTypeId",
-                principalTable: "HeatingTypes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "EstateTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Estates_HeatingTypeId",
+                table: "Estates",
+                column: "HeatingTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CustomerTypes_Customers_CustomerId",
-                table: "CustomerTypes");
+            migrationBuilder.DropTable(
+                name: "CustomerTypeCustomer");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Estates_Districts_DistrictId",
-                table: "Estates");
+            migrationBuilder.DropTable(
+                name: "Estates");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Estates_EstateTypes_EstateTypeId",
-                table: "Estates");
+            migrationBuilder.DropTable(
+                name: "Workplaces");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Estates_HeatingTypes_HeatingTypeId",
-                table: "Estates");
+            migrationBuilder.DropTable(
+                name: "CustomerTypes");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Districts");
 
             migrationBuilder.DropTable(
+                name: "EstateTypes");
+
+            migrationBuilder.DropTable(
+                name: "HeatingTypes");
+
+            migrationBuilder.DropTable(
                 name: "Cities");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Estates_DistrictId",
-                table: "Estates");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_HeatingTypes",
-                table: "HeatingTypes");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_EstateTypes",
-                table: "EstateTypes");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_CustomerTypes",
-                table: "CustomerTypes");
-
-            migrationBuilder.DropColumn(
-                name: "Address",
-                table: "Estates");
-
-            migrationBuilder.DropColumn(
-                name: "DistrictId",
-                table: "Estates");
-
-            migrationBuilder.RenameTable(
-                name: "HeatingTypes",
-                newName: "HeatingType");
-
-            migrationBuilder.RenameTable(
-                name: "EstateTypes",
-                newName: "EstateType");
-
-            migrationBuilder.RenameTable(
-                name: "CustomerTypes",
-                newName: "CustomerType");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_CustomerTypes_CustomerId",
-                table: "CustomerType",
-                newName: "IX_CustomerType_CustomerId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_HeatingType",
-                table: "HeatingType",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_EstateType",
-                table: "EstateType",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_CustomerType",
-                table: "CustomerType",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_CustomerType_Customers_CustomerId",
-                table: "CustomerType",
-                column: "CustomerId",
-                principalTable: "Customers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Estates_EstateType_EstateTypeId",
-                table: "Estates",
-                column: "EstateTypeId",
-                principalTable: "EstateType",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Estates_HeatingType_HeatingTypeId",
-                table: "Estates",
-                column: "HeatingTypeId",
-                principalTable: "HeatingType",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }

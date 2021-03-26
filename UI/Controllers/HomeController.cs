@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,18 +11,21 @@ using UI.Models;
 
 namespace UI.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IEstateRepository _estateRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IEstateRepository estateRepository)
         {
             _logger = logger;
+            _estateRepository = estateRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(_estateRepository.GetAll());
         }
 
         public IActionResult Privacy()

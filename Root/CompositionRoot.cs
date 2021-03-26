@@ -19,6 +19,7 @@ namespace Root
         public static void InjectDependencies(IServiceCollection services)
         {
             services.AddScoped<RealEstateDbContext>();
+            services.AddScoped(typeof(ITypesRepository<>), typeof(TypeBaseRepository<>));
             services.AddScoped<IEstateRepository, EstateManager>();
             services.AddScoped<ICustomerRepository, CustomerManager>();
             services.AddScoped<IWorkPlaceRepository, WorkplaceManager>();

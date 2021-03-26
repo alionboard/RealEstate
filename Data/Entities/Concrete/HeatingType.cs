@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Entities.Abstract;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -7,7 +8,7 @@ namespace Data.Entities.Concrete
 {
     [Table("HeatingTypes")]
 
-    public class HeatingType
+    public class HeatingType : IType
     {
         public int Id { get; set; }
         public string Type { get; set; }

@@ -3,6 +3,7 @@ using Data.Context;
 using Data.Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Services
@@ -13,5 +14,8 @@ namespace Business.Services
         {
 
         }
+
+
+
     }
 }
