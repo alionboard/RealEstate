@@ -35,11 +35,6 @@ namespace Business.Services
             return _entities.AsEnumerable();
         }
 
-        public T GetById(int id)
-        {
-            return _entities.Find(id);
-        }
-
         public void Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;

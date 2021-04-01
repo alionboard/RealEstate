@@ -10,7 +10,6 @@ namespace Business.Repositories
         void Add(T Entity);
         void Update(T Entity);
         void Delete(T Entity);
-        T GetById(int id);
         IEnumerable<T> GetAll();
         
     }

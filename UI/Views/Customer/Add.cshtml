@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Müşteri Ekle";
 }
+<div class="my-5">
+    <h3>Müşteri Ekle</h3>
+</div>
 <div>
     <form asp-controller="Customer" asp-action="Add" method="post">
         <div class="form-group row">
@@ -32,22 +35,19 @@
             <div class="row">
                 <legend class="col-form-label col-sm-2 pt-0">Müşteri Tipi</legend>
                 <div class="col-sm-10">
-                    @{int i = 0;
-                        foreach (var item in TempData["CustomerTypes"] as List<CustomerType>)
+                    @foreach (var item in TempData["CustomerTypes"] as List<CustomerType>)
                         {
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="cTypes" id="@item.Type" value="@item.Id">
+                                <input class="form-check-input" type="checkbox" name="CustomerTypes" id="@item.Type" value="@item.Id">
                                 <label class="form-check-label" for="@item.Type">@item.Type</label>
-                            </div>
-                            i++;
+                            </div>                 
                         }
-                    }
                 </div>
             </div>
         </fieldset>
         <div class="form-group row">
             <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
             </div>
         </div>
     </form>

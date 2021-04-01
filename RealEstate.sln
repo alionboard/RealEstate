@@ -7,12 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Busine
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{1E76D83D-8958-40DF-9A9E-D2F810FF55C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{F6AF3018-DC70-44EC-9F90-99279E84FD15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "UI\UI.csproj", "{F6AF3018-DC70-44EC-9F90-99279E84FD15}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F08ACF72-2ED1-4B90-B130-951C4B148FC5} = {F08ACF72-2ED1-4B90-B130-951C4B148FC5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Root", "Root\Root.csproj", "{83C3E60E-8A5D-4EA8-910C-90E55AA8750A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Root", "Root\Root.csproj", "{83C3E60E-8A5D-4EA8-910C-90E55AA8750A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B995F7B1-05B2-466C-A5B9-51296CE4A597}"
+	ProjectSection(SolutionItems) = preProject
+		ToDo.txt = ToDo.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

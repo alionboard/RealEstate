@@ -8,6 +8,8 @@ namespace Business.Repositories
     public interface ITypesRepository<T> where T : class, IType
     {
         IEnumerable<T> GetAllTTypes();
+        void AddAllTTypes(List<T> entities);
+        void DeleteAllTTypes(List<T> entities);
         T GetById(int Id);
         void Add(T Entity);
     }

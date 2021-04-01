@@ -26,6 +26,18 @@ namespace Business.Services
             _context.SaveChanges();
         }
 
+        public void AddAllTTypes(List<T> entities)
+        {
+            _entities.AddRange(entities);
+            _context.SaveChanges();
+        }
+
+        public void DeleteAllTTypes(List<T> entities)
+        {
+            _entities.RemoveRange(entities);
+            _context.SaveChanges();
+        }
+
         public IEnumerable<T> GetAllTTypes()
         {
             return _entities.ToList();

@@ -13,5 +13,10 @@ namespace Business.Services
         {
 
         }
+
+        public Estate GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

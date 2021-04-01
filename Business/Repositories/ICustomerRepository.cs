@@ -7,5 +7,6 @@ namespace Business.Repositories
 {
     public interface ICustomerRepository : IRepository<Customer>
     {
+        Customer GetById(int id);
     }
 }

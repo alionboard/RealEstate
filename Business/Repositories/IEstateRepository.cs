@@ -7,5 +7,7 @@ namespace Business.Repositories
 {
     public interface IEstateRepository : IRepository<Estate>
     {
+        Estate GetById(int id);
+
     }
 }

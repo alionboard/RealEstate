@@ -1,0 +1,68 @@
+﻿@model Customer
+@{
+    ViewData["Title"] = "Müşteri Düzenle";
+}
+<div class="my-5">
+    <h3>Müşteri Düzenle</h3>
+</div>
+<div>
+    <form asp-controller="Customer" asp-action="Edit" method="post">
+        <div class="form-group row">
+            <label asp-for="Fullname" class="col-sm-2 col-form-label">Ad-Soyad</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Ad-Soyad" asp-for="Fullname">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Email" class="col-sm-2 col-form-label">Eposta</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" placeholder="Eposta" asp-for="Email">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MobileNumber" class="col-sm-2 col-form-label">Cep Tel</label>
+            <div class="col-sm-10">
+                <input type="tel" class="form-control" placeholder="Cep Tel" asp-for="MobileNumber">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="HousePhoneNumber" class="col-sm-2 col-form-label">Ev Tel</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Ev Tel" asp-for="HousePhoneNumber">
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Müşteri Tipi</legend>
+                <div class="col-sm-10">
+
+                    @foreach (var item in ViewBag.CustomerTypes as List<CustomerType>)
+                    {
+                        <div class="form-check">
+                            @{ if (Model.CustomerTypes.Any(x => x.CustomerTypeId == item.Id))
+                                {
+                                    <input class="form-check-input" type="checkbox" name="CustomerTypes" id="@item.Type" value="@item.Id" checked="checked">
+                                    <input type="hidden" name="currentTypes" value="@item.Id" />
+                                }
+                                else
+                                {
+                                    <input class="form-check-input" type="checkbox" name="CustomerTypes" id="@item.Type" value="@item.Id">
+                                }
+                            }
+                            @*<input class="form-check-input" type="checkbox" name="CustomerTypes" id="@item.Type" value="@item.Id" @(Model.CustomerTypes.Any(x => x.CustomerTypeId == item.Id) ? "checked=\"checked\"" : "")>*@
+
+                            <label class="form-check-label" for="@item.Type">@item.Type</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </fieldset>
+        <div class="row">
+            <div class="col-sm-10 ">
+                <button type="submit" class="btn btn-primary d-inline">Kaydet</button>
+                <a type="button" asp-controller="Customer" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger d-inline" onclick="return confirm('Bu kişiyi silmek istediğinizden emin misiniz?')">Sil</a>
+            </div>
+        </div>
+    </form>
+
+</div>
