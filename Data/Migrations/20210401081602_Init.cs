@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
@@ -28,7 +29,8 @@ namespace Data.Migrations
                     Fullname = table.Column<string>(nullable: true),
                     HousePhoneNumber = table.Column<string>(nullable: true),
                     MobileNumber = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,11 +148,12 @@ namespace Data.Migrations
                     NumberOfRooms = table.Column<int>(nullable: false),
                     Floor = table.Column<int>(nullable: false),
                     TotalNumberOfBuildingFloors = table.Column<int>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     EstateTypeId = table.Column<int>(nullable: false),
                     HeatingTypeId = table.Column<int>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
-                    DistrictId = table.Column<int>(nullable: false),
-                    Address = table.Column<string>(nullable: true)
+                    DistrictId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -201,8 +204,8 @@ namespace Data.Migrations
                     { 49, "Muş" },
                     { 48, "Muğla" },
                     { 47, "Mardin" },
-                    { 46, "K.Maraş" },
                     { 45, "Manisa" },
+                    { 44, "Malatya" },
                     { 52, "Ordu" },
                     { 62, "Tunceli" },
                     { 63, "Şanlıurfa" },
@@ -224,13 +227,13 @@ namespace Data.Migrations
                     { 67, "Zonguldak" },
                     { 66, "Yozgat" },
                     { 65, "Van" },
-                    { 44, "Malatya" },
-                    { 42, "Konya" },
                     { 43, "Kütahya" },
+                    { 42, "Konya" },
+                    { 46, "K.Maraş" },
                     { 40, "Kırşehir" },
                     { 18, "Çankırı" },
                     { 17, "Çanakkale" },
-                    { 16, "Bursa" },
+                    { 41, "Kocaeli" },
                     { 15, "Burdur" },
                     { 14, "Bolu" },
                     { 13, "Bitlis" },
@@ -246,18 +249,18 @@ namespace Data.Migrations
                     { 3, "Afyon" },
                     { 2, "Adıyaman" },
                     { 19, "Çorum" },
-                    { 41, "Kocaeli" },
                     { 20, "Denizli" },
+                    { 16, "Bursa" },
                     { 22, "Edirne" },
                     { 39, "Kırklareli" },
                     { 38, "Kayseri" },
                     { 37, "Kastamonu" },
-                    { 36, "Kars" },
+                    { 21, "Diyarbakır" },
                     { 35, "İzmir" },
                     { 34, "İstanbul" },
-                    { 21, "Diyarbakır" },
-                    { 32, "Isparta" },
                     { 33, "Mersin" },
+                    { 32, "Isparta" },
+                    { 36, "Kars" },
                     { 30, "Hakkari" },
                     { 29, "Gümüşhane" },
                     { 28, "Giresun" },
@@ -274,10 +277,31 @@ namespace Data.Migrations
                 columns: new[] { "Id", "Type" },
                 values: new object[,]
                 {
+                    { 4, "Kiracı" },
                     { 3, "Kiraya Veren" },
                     { 1, "Satıcı" },
-                    { 2, "Alıcı" },
-                    { 4, "Kiracı" }
+                    { 2, "Alıcı" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EstateTypes",
+                columns: new[] { "Id", "Type" },
+                values: new object[,]
+                {
+                    { 1, "Satılık" },
+                    { 2, "Kiralık" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "HeatingTypes",
+                columns: new[] { "Id", "Type" },
+                values: new object[,]
+                {
+                    { 4, "Güneş Enerjisi" },
+                    { 1, "Yok" },
+                    { 2, "Doğalgaz" },
+                    { 3, "Merkezi Isıtma" },
+                    { 5, "Soba" }
                 });
 
             migrationBuilder.InsertData(

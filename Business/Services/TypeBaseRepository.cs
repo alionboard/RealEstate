@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Services
@@ -32,9 +33,9 @@ namespace Business.Services
             _context.SaveChanges();
         }
 
-        public void DeleteAllTTypes(List<T> entities)
+        public void DeleteAllTTypes(Expression<Func<T, bool>> filter)
         {
-            _entities.RemoveRange(entities);
+            _entities.RemoveRange(_entities.Where(filter));
             _context.SaveChanges();
         }
 

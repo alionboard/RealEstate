@@ -25,12 +25,16 @@ namespace UI.Controllers
             _customerTypeCustomerRepository = customerTypeCustomerRepository;
             _customerTypes = _customerTypeRepository.GetAllTTypes();
         }
+
+        [HttpGet]
         [Route("Musteriler")]
         public IActionResult Index()
         {
             return View(_customerRepository.GetAll().ToList());
         }
-        [Route("MusteriEkle")]
+
+        [HttpGet]
+
         public IActionResult Add()
         {
             TempData["CustomerTypes"] = _customerTypeRepository.GetAllTTypes();
@@ -40,7 +44,6 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult Add(CustomerViewModel customerVM)
         {
-
 
             Customer customer = new Customer
             {
@@ -67,7 +70,6 @@ namespace UI.Controllers
 
 
         [HttpGet]
-        [Route("MusteriDuzenle")]
         public IActionResult Edit(int id)
         {
             ViewBag.CustomerTypes = _customerTypes;
@@ -78,19 +80,20 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult Edit(CustomerViewModel customerVM, List<int> currentTypes)
         {
-            //Current CustomerTypes that customer has
-            List<CustomerTypeCustomer> entitiesToDelete = new List<CustomerTypeCustomer>();
-            foreach (int item in currentTypes)
-                entitiesToDelete.Add(new CustomerTypeCustomer { CustomerTypeId = item, CustomerId = customerVM.Id });
 
-            _customerTypeCustomerRepository.DeleteAllTTypes(entitiesToDelete);
+            #region CustomerTypes Güncelleme
 
-            //Updated CustomerTypes that going to add
+            //Mevcut CustomerTypes Silme
+            _customerTypeCustomerRepository.DeleteAllTTypes(x => x.CustomerId == customerVM.Id);
+
+            //Güncel CustomerTypes Ekleme
             List<CustomerTypeCustomer> entitiesToAdd = new List<CustomerTypeCustomer>();
             foreach (int customerTypeId in customerVM.CustomerTypes)
                 entitiesToAdd.Add(new CustomerTypeCustomer { CustomerTypeId = customerTypeId, CustomerId = customerVM.Id });
 
             _customerTypeCustomerRepository.AddAllTTypes(entitiesToAdd);
+
+            #endregion 
 
             Customer customer = new Customer
             {
@@ -105,6 +108,7 @@ namespace UI.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             var customerToDelete = _customerRepository.GetById(id);
@@ -112,5 +116,10 @@ namespace UI.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            return View(_customerRepository.GetById(id));
+        }
     }
 }

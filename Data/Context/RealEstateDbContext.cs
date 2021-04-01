@@ -17,6 +17,7 @@ namespace Data.Context
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Workplace> Workplaces { get; set; }
         public virtual DbSet<CustomerType> CustomerTypes { get; set; }
+        public virtual DbSet<District> Districts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

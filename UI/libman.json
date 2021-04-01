@@ -6,6 +6,58 @@
       "provider": "cdnjs",
       "library": "font-awesome@5.15.3",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables.net-buttons@1.7.0",
+      "destination": "wwwroot/lib/datatables.net-buttons/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/lib/datatables/",
+      "files": [
+        "css/dataTables.bootstrap4.css",
+        "css/dataTables.bootstrap4.min.css",
+        "css/jquery.dataTables.css",
+        "css/jquery.dataTables.min.css",
+        "images/sort_asc.png",
+        "images/sort_asc_disabled.png",
+        "images/sort_both.png",
+        "images/sort_desc.png",
+        "images/sort_desc_disabled.png",
+        "js/dataTables.bootstrap4.js",
+        "js/dataTables.bootstrap4.min.js",
+        "js/dataTables.bootstrap.min.js",
+        "js/dataTables.bootstrap.js",
+        "js/dataTables.dataTables.js",
+        "js/dataTables.dataTables.min.js",
+        "js/jquery.dataTables.js",
+        "js/jquery.dataTables.min.js"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "datatables.net-buttons-bs4@1.7.0",
+      "destination": "wwwroot/lib/datatables.net-buttons-bs4/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jszip@3.6.0",
+      "destination": "wwwroot/lib/jszip/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "pdfmake@0.1.70",
+      "destination": "wwwroot/lib/pdfmake/",
+      "files": [
+        "pdfmake.min.js",
+        "fonts/Roboto/Roboto-Italic.ttf",
+        "fonts/Roboto/Roboto-Medium.ttf",
+        "fonts/Roboto/Roboto-MediumItalic.ttf",
+        "fonts/Roboto/Roboto-Regular.ttf",
+        "vfs_fonts.min.js"
+      ]
     }
   ]
 }

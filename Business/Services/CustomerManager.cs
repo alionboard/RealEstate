@@ -19,7 +19,7 @@ namespace Business.Services
 
         public Customer GetById(int id)
         {
-            var customers = _context.Customers.Include(customer => customer.CustomerTypes);
+            var customers = _context.Customers.Include(customer => customer.CustomerTypes).Include(customer => customer.Estates).ThenInclude(estate=>estate.District.City);
             return customers.FirstOrDefault(x=>x.Id == id);
         }
     }

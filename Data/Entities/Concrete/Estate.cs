@@ -7,11 +7,17 @@ namespace Data.Entities.Concrete
 {
     public class Estate : IEntity
     {
+        public Estate()
+        {
+            ModifiedDate = DateTime.UtcNow;
+        }
         public int Id { get; set; }
         public double SquareMeter { get; set; }
         public int NumberOfRooms { get; set; }
         public int Floor { get; set; }
         public int TotalNumberOfBuildingFloors { get; set; }
+        public string Address { get; set; }
+        public DateTime ModifiedDate { get; set; }
         public int EstateTypeId { get; set; }
         public virtual EstateType EstateType { get; set; }
         public int HeatingTypeId { get; set; }
@@ -22,7 +28,6 @@ namespace Data.Entities.Concrete
         //public virtual City City { get; set; }
         public int DistrictId { get; set; }
         public virtual District District { get; set; }
-        public string Address { get; set; }
     }
 
 }
