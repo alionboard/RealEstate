@@ -1,4 +1,5 @@
-﻿using Business.Repositories;
+﻿using AutoMapper;
+using Business.Repositories;
 using Data.Context;
 using Data.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,16 @@ namespace UI.Controllers
         private readonly ICustomerRepository _customerRepository;
         private readonly ITypesRepository<CustomerType> _customerTypeRepository;
         private readonly ITypesRepository<CustomerTypeCustomer> _customerTypeCustomerRepository;
+        private readonly IMapper _mapper;
         private readonly IEnumerable<CustomerType> _customerTypes;
 
-        public CustomerController(ICustomerRepository customerRepository, ITypesRepository<CustomerType> customerTypeRepository, ITypesRepository<CustomerTypeCustomer> customerTypeCustomerRepository)
+        public CustomerController(ICustomerRepository customerRepository, ITypesRepository<CustomerType> customerTypeRepository, ITypesRepository<CustomerTypeCustomer> customerTypeCustomerRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _customerRepository = customerRepository;
             _customerTypeRepository = customerTypeRepository;
             _customerTypeCustomerRepository = customerTypeCustomerRepository;
-            _customerTypes = _customerTypeRepository.GetAllTTypes();
+            _customerTypes = _customerTypeRepository.GetAllTTypes().ToList();
         }
 
         [HttpGet]
@@ -37,7 +40,7 @@ namespace UI.Controllers
         [Route("Ekle")]
         public IActionResult Add()
         {
-            TempData["CustomerTypes"] = _customerTypeRepository.GetAllTTypes().ToList();
+            TempData["CustomerTypes"] = _customerTypes;
             return View();
         }
 
@@ -47,15 +50,7 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Customer customer = new Customer
-                {
-                    Fullname = customerDto.Fullname,
-                    Email = customerDto.Email,
-                    MobileNumber = customerDto.MobileNumber,
-                    HousePhoneNumber = customerDto.HousePhoneNumber,
-                };
-
-                _customerRepository.Add(customer);
+                Customer customer = _mapper.Map<Customer>(customerDto);
 
                 foreach (int cType in customerDto.CustomerTypes)
                 {
@@ -64,11 +59,15 @@ namespace UI.Controllers
                         Customer = customer,
                         CustomerTypeId = cType
                     };
-                    _customerTypeCustomerRepository.Add(customerTypeCustomer);
+                    customer.CustomerTypes.Add(customerTypeCustomer);
                 }
+
+                _customerRepository.Add(customer);
+                _customerTypeCustomerRepository.AddAllTTypes(customer.CustomerTypes);
+
                 return RedirectToAction("Index");
             }
-            TempData["CustomerTypes"] = _customerTypeRepository.GetAllTTypes().ToList();
+            TempData["CustomerTypes"] = _customerTypes;
             return View(customerDto);
 
         }
@@ -77,41 +76,35 @@ namespace UI.Controllers
         [Route("Duzenle")]
         public IActionResult Edit(int id)
         {
-            ViewBag.CustomerTypes = _customerTypes;
-            return View(_customerRepository.GetById(id));
+            TempData["CustomerTypes"] = _customerTypes;
+            Customer customer = _customerRepository.GetById(id);
+            CustomerViewModel customerVM = _mapper.Map<CustomerViewModel>(customer);
+            return View(customerVM);
         }
-
 
         [HttpPost]
         [Route("Duzenle")]
         public IActionResult Edit(CustomerViewModel customerVM)
         {
-
-            #region CustomerTypes Güncelleme
-
-            //Mevcut CustomerTypes Silme
-            _customerTypeCustomerRepository.DeleteAllTTypes(x => x.CustomerId == customerVM.Id);
-
-            //Güncel CustomerTypes Ekleme
             List<CustomerTypeCustomer> entitiesToAdd = new List<CustomerTypeCustomer>();
-            foreach (int customerTypeId in customerVM.CustomerTypes)
-                entitiesToAdd.Add(new CustomerTypeCustomer { CustomerTypeId = customerTypeId, CustomerId = customerVM.Id });
+            if (customerVM.CustomerTypeIds != null)
+                foreach (int customerTypeId in customerVM.CustomerTypeIds)
+                    entitiesToAdd.Add(new CustomerTypeCustomer { CustomerTypeId = customerTypeId, CustomerId = customerVM.Id });
 
-            _customerTypeCustomerRepository.AddAllTTypes(entitiesToAdd);
-
-            #endregion 
-
-            Customer customer = new Customer
+            if (ModelState.IsValid)
             {
-                Id = customerVM.Id,
-                Fullname = customerVM.Fullname,
-                Email = customerVM.Email,
-                MobileNumber = customerVM.MobileNumber,
-                HousePhoneNumber = customerVM.HousePhoneNumber,
-            };
+                _customerTypeCustomerRepository.DeleteAllTTypes(x => x.CustomerId == customerVM.Id);
+                _customerTypeCustomerRepository.AddAllTTypes(entitiesToAdd);
 
-            _customerRepository.Update(customer);
-            return RedirectToAction("Index");
+                Customer customer = _mapper.Map<Customer>(customerVM);
+
+                _customerRepository.Update(customer);
+                return RedirectToAction("Index");
+            }
+
+            customerVM.CustomerTypes = entitiesToAdd;
+            TempData["CustomerTypes"] = _customerTypes;
+            return View(customerVM);
         }
 
         [HttpGet]

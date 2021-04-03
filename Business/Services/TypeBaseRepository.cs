@@ -27,7 +27,7 @@ namespace Business.Services
             _context.SaveChanges();
         }
 
-        public void AddAllTTypes(List<T> entities)
+        public void AddAllTTypes(ICollection<T> entities)
         {
             _entities.AddRange(entities);
             _context.SaveChanges();

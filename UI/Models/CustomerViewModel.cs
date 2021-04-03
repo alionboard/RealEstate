@@ -19,8 +19,7 @@ namespace UI.Models
         [Required]
         public string Email { get; set; }
         [Required]
-        public List<int> CustomerTypes { get; set; }
-
-        public List<int> Estates { get; set; }
+        public List<int> CustomerTypeIds { get; set; }
+        public ICollection<CustomerTypeCustomer> CustomerTypes { get; set; }
     }
 }

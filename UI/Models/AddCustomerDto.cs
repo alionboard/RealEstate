@@ -19,6 +19,5 @@ namespace UI.Models
         [Required]
         public List<int> CustomerTypes { get; set; }
 
-        public List<int> Estates { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 <div class="mt-3 mb-4">
     <h3>Müşteri Ekle</h3>
 </div>
-    <hr />
+<hr />
 <div>
     <form asp-controller="Customer" asp-action="Add" method="post">
         <div class="form-group row">
@@ -20,7 +20,6 @@
             <div class="col-sm-10">
                 <input type="email" class="form-control" placeholder="Eposta" asp-for="Email">
                 <span asp-validation-for="Email" class="text-danger"></span>
-
             </div>
         </div>
         <div class="form-group row">
@@ -28,7 +27,6 @@
             <div class="col-sm-10">
                 <input type="tel" class="form-control" placeholder="Cep Tel" asp-for="MobileNumber">
                 <span asp-validation-for="MobileNumber" class="text-danger"></span>
-
             </div>
         </div>
         <div class="form-group row">
@@ -41,21 +39,13 @@
         <fieldset class="form-group">
             <div class="row">
                 <legend class="col-form-label col-sm-2 pt-0">Müşteri Tipi</legend>
-                <div class="col-sm-10">
-                    @*@foreach (CustomerType item in (List<CustomerType>)TempData["CustomerTypes"])
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="CustomerTypes" id="@item.Type" value="@item.Id">
-                            <label class="form-check-label" for="@item.Type">@item.Type</label>
-                        </div>
-                    }*@
+                <div class="col-sm-10">                  
                     @foreach (var item in TempData["CustomerTypes"] as List<CustomerType>)
                     {
                         <div class="form-check">
-                            @{ if (Model!=null&& Model.CustomerTypes!=null && Model.CustomerTypes.Contains(item.Id))
+                            @{ if (Model != null && Model.CustomerTypes != null && Model.CustomerTypes.Contains(item.Id))
                                 {
                                     <input class="form-check-input" type="checkbox" name="CustomerTypes" id="@item.Type" value="@item.Id" checked="checked">
-                                    <input type="hidden" name="currentTypes" value="@item.Id" />
                                 }
                                 else
                                 {
@@ -67,6 +57,7 @@
                             <label class="form-check-label" for="@item.Type">@item.Type</label>
                         </div>
                     }
+                    <span asp-validation-for="CustomerTypes" class="text-danger"></span>
                 </div>
             </div>
         </fieldset>
