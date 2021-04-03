@@ -30,46 +30,51 @@ namespace UI.Controllers
         [Route("Musteriler")]
         public IActionResult Index()
         {
-            return View(_customerRepository.GetAll().ToList());
+            return View(_customerRepository.GetAll().OrderByDescending(x => x.ModifiedDate).ToList());
         }
 
         [HttpGet]
-
+        [Route("Ekle")]
         public IActionResult Add()
         {
-            TempData["CustomerTypes"] = _customerTypeRepository.GetAllTTypes();
+            TempData["CustomerTypes"] = _customerTypeRepository.GetAllTTypes().ToList();
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(CustomerViewModel customerVM)
+        [Route("Ekle")]
+        public IActionResult Add(AddCustomerDto customerDto)
         {
-
-            Customer customer = new Customer
+            if (ModelState.IsValid)
             {
-                Fullname = customerVM.Fullname,
-                Email = customerVM.Email,
-                MobileNumber = customerVM.MobileNumber,
-                HousePhoneNumber = customerVM.HousePhoneNumber,
-            };
-
-            _customerRepository.Add(customer);
-
-            foreach (int cType in customerVM.CustomerTypes)
-            {
-                CustomerTypeCustomer customerTypeCustomer = new CustomerTypeCustomer
+                Customer customer = new Customer
                 {
-                    Customer = customer,
-                    CustomerTypeId = cType
+                    Fullname = customerDto.Fullname,
+                    Email = customerDto.Email,
+                    MobileNumber = customerDto.MobileNumber,
+                    HousePhoneNumber = customerDto.HousePhoneNumber,
                 };
-                _customerTypeCustomerRepository.Add(customerTypeCustomer);
 
+                _customerRepository.Add(customer);
+
+                foreach (int cType in customerDto.CustomerTypes)
+                {
+                    CustomerTypeCustomer customerTypeCustomer = new CustomerTypeCustomer
+                    {
+                        Customer = customer,
+                        CustomerTypeId = cType
+                    };
+                    _customerTypeCustomerRepository.Add(customerTypeCustomer);
+                }
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            TempData["CustomerTypes"] = _customerTypeRepository.GetAllTTypes().ToList();
+            return View(customerDto);
+
         }
 
-
         [HttpGet]
+        [Route("Duzenle")]
         public IActionResult Edit(int id)
         {
             ViewBag.CustomerTypes = _customerTypes;
@@ -78,7 +83,8 @@ namespace UI.Controllers
 
 
         [HttpPost]
-        public IActionResult Edit(CustomerViewModel customerVM, List<int> currentTypes)
+        [Route("Duzenle")]
+        public IActionResult Edit(CustomerViewModel customerVM)
         {
 
             #region CustomerTypes Güncelleme
@@ -109,6 +115,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [Route("Sil")]
         public IActionResult Delete(int id)
         {
             var customerToDelete = _customerRepository.GetById(id);
@@ -117,6 +124,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
+        [Route("Detaylar")]
         public IActionResult Details(int id)
         {
             return View(_customerRepository.GetById(id));

@@ -1,5 +1,4 @@
-﻿using Data.Entities.Concrete;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class CustomerViewModel
+    public class AddCustomerDto
     {
-        public int Id { get; set; }
         [Required]
         public string Fullname { get; set; }
         [Required]

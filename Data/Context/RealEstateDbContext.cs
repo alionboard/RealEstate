@@ -48,6 +48,7 @@ namespace Data.Context
             );
 
             modelBuilder.SeedCityDistrict();
+            modelBuilder.ValidateModels();
         }
     }
 }

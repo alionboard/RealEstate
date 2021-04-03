@@ -22,7 +22,6 @@ namespace UI.Controllers
             _logger = logger;
             _estateRepository = estateRepository;
         }
-
         public IActionResult Index()
         {
             return View(_estateRepository.GetAll());
