@@ -78,33 +78,33 @@ namespace UI.Controllers
         {
             TempData["CustomerTypes"] = _customerTypes;
             Customer customer = _customerRepository.GetById(id);
-            CustomerViewModel customerVM = _mapper.Map<CustomerViewModel>(customer);
-            return View(customerVM);
+            EditCustomerDto customerDto = _mapper.Map<EditCustomerDto>(customer);
+            return View(customerDto);
         }
 
         [HttpPost]
         [Route("Duzenle")]
-        public IActionResult Edit(CustomerViewModel customerVM)
+        public IActionResult Edit(EditCustomerDto customerDto)
         {
             List<CustomerTypeCustomer> entitiesToAdd = new List<CustomerTypeCustomer>();
-            if (customerVM.CustomerTypeIds != null)
-                foreach (int customerTypeId in customerVM.CustomerTypeIds)
-                    entitiesToAdd.Add(new CustomerTypeCustomer { CustomerTypeId = customerTypeId, CustomerId = customerVM.Id });
+            if (customerDto.CustomerTypeIds != null)
+                foreach (int customerTypeId in customerDto.CustomerTypeIds)
+                    entitiesToAdd.Add(new CustomerTypeCustomer { CustomerTypeId = customerTypeId, CustomerId = customerDto.Id });
 
             if (ModelState.IsValid)
             {
-                _customerTypeCustomerRepository.DeleteAllTTypes(x => x.CustomerId == customerVM.Id);
+                _customerTypeCustomerRepository.DeleteAllTTypes(x => x.CustomerId == customerDto.Id);
                 _customerTypeCustomerRepository.AddAllTTypes(entitiesToAdd);
 
-                Customer customer = _mapper.Map<Customer>(customerVM);
+                Customer customer = _mapper.Map<Customer>(customerDto);
 
                 _customerRepository.Update(customer);
                 return RedirectToAction("Index");
             }
 
-            customerVM.CustomerTypes = entitiesToAdd;
+            customerDto.CustomerTypes = entitiesToAdd;
             TempData["CustomerTypes"] = _customerTypes;
-            return View(customerVM);
+            return View(customerDto);
         }
 
         [HttpGet]

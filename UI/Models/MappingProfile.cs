@@ -11,8 +11,8 @@ namespace UI.Models
     {
         public MappingProfile()
         {
-            CreateMap<CustomerViewModel, Customer>();
-            CreateMap<Customer, CustomerViewModel>();
+            CreateMap<EditCustomerDto, Customer>();
+            CreateMap<Customer, EditCustomerDto>();
             CreateMap<AddCustomerDto, Customer>()
                 .ForMember(dest => dest.CustomerTypes, opt => opt.Ignore());
         }

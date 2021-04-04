@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class CustomerViewModel
+    public class EditCustomerDto
     {
         public int Id { get; set; }
         [Required]
