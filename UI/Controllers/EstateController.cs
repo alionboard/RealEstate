@@ -35,6 +35,8 @@ namespace UI.Controllers
         [Route("Emlaklar")]
         public IActionResult Index()
         {
+            ViewBag.Cities = _cityRepository.GetAllTTypes();
+            ViewBag.HeatingTypes = _heatingTypesRepository.GetAllTTypes();
             return View(_estateRepository.GetAll().ToList());
         }
 

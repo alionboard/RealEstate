@@ -20,6 +20,7 @@
             </select>
             <span asp-validation-for="CustomerId" class="text-danger mx-3"></span>
         </div>
+        <hr />
         <div class="form-group row mb-0">
             <div class="form-group col-md-6">
                 <label class="col-form-label" for="cities">Şehir</label>
@@ -36,7 +37,6 @@
                 <select name="DistrictId" class="custom-select form-control" id="districts" disabled>
                 </select>
                 <span asp-validation-for="DistrictId" class="text-danger"></span>
-
             </div>
         </div>
         <div class="form-group row">
@@ -46,6 +46,7 @@
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
         </div>
+        <hr />
         <div class="form-group row">
             <label asp-for="Floor" class="col-sm-2 col-form-label">Kat</label>
             <div class="col-sm-10">
@@ -60,33 +61,7 @@
                 <span asp-validation-for="NumberOfRooms" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row my-0">
-            <div class="form-group col-md-6">
-                <label class="col-form-label" for="estateTypes">Satış Türü</label>
-                <select name="EstateTypeId" class="custom-select form-control" id="estateTypes">
-                    <option value="0">Seçiniz...</option>
-                    @foreach (EstateType item in ViewBag.EstateTypes)
-                    {
-                        <option value="@item.Id">@item.Type</option>
-                    }
-                </select>
-                <span asp-validation-for="EstateTypeId" class="text-danger"></span>
 
-                
-            </div>
-            <div class="form-group col-md-6">
-                <label class="col-form-label" for="heatingTypes">Isınma Türü</label>
-                <select name="HeatingTypeId" class="custom-select form-control" id="heatingTypes">
-                    <option value="0">Seçiniz...</option>
-                    @foreach (HeatingType item in ViewBag.HeatingTypes)
-                    {
-                        <option value="@item.Id">@item.Type</option>
-                    }
-                </select>
-                <span asp-validation-for="HeatingTypeId" class="text-danger"></span>
-
-            </div>
-        </div>
         <div class="form-group row">
             <label asp-for="SquareMeter" class="col-sm-2 col-form-label">Metrekare</label>
             <div class="col-sm-10">
@@ -101,6 +76,34 @@
                 <span asp-validation-for="TotalNumberOfBuildingFloors" class="text-danger"></span>
             </div>
         </div>
+        <div class="form-group row my-0">
+            <div class="form-group col-md-6">
+                <label class="col-form-label" for="estateTypes">Satış Türü</label>
+                <select name="EstateTypeId" class="custom-select form-control" id="estateTypes">
+                    <option value="0">Seçiniz...</option>
+                    @foreach (EstateType item in ViewBag.EstateTypes)
+                    {
+                        <option value="@item.Id">@item.Type</option>
+                    }
+                </select>
+                <span asp-validation-for="EstateTypeId" class="text-danger"></span>
+
+
+            </div>
+            <div class="form-group col-md-6">
+                <label class="col-form-label" for="heatingTypes">Isınma Türü</label>
+                <select name="HeatingTypeId" class="custom-select form-control" id="heatingTypes">
+                    <option value="0">Seçiniz...</option>
+                    @foreach (HeatingType item in ViewBag.HeatingTypes)
+                    {
+                        <option value="@item.Id">@item.Type</option>
+                    }
+                </select>
+                <span asp-validation-for="HeatingTypeId" class="text-danger"></span>
+
+            </div>
+        </div>
+        <hr />
         <div class="form-group row">
             <label asp-for="Price" class="col-sm-2 col-form-label">Ücret</label>
             <div class="col-sm-10">
