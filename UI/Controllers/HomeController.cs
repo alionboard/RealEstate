@@ -24,7 +24,7 @@ namespace UI.Controllers
         }
         public IActionResult Index()
         {
-            return View(_estateRepository.GetAll());
+            return View(_estateRepository.GetAll(null));
         }
 
         public IActionResult Privacy()

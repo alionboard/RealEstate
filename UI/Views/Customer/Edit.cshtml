@@ -1,4 +1,5 @@
 ﻿@model EditCustomerDto
+@{ 
     ViewData["Title"] = "Müşteri Düzenle";
 }
 <div class="mt-3 mb-4">
@@ -42,7 +43,7 @@
                 <div class="col-sm-10">
 
                     @foreach (var item in TempData["CustomerTypes"] as List<CustomerType>)
-                    {
+                    {   
                         <div class="form-check">
                             @{ if (Model != null && Model.CustomerTypes != null && Model.CustomerTypes.Any(x => x.CustomerTypeId == item.Id))
                                 {

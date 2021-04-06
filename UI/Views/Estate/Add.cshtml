@@ -1,0 +1,156 @@
+﻿@model AddEstateDto;
+@{
+    ViewData["Title"] = "Emlak Ekle";
+}
+
+<div class="mt-3 mb-4">
+    <h3>Emlak Ekle</h3>
+</div>
+<hr />
+<div>
+    <form asp-controller="Estate" asp-action="Add" method="post">
+        <div class="form-group row">
+            <label class="col-form-label col-sm-2 col-form-label" for="districts">Müşteri</label>
+            <select name="CustomerId" class="custom-select form- mx-3" id="customer">
+                <option value="0">Seçiniz...</option>
+                @foreach (Customer item in ViewBag.Customers)
+                {
+                    <option value="@item.Id">@item.Fullname</option>
+                }
+            </select>
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+
+        </div>
+        <div class="form-group row mb-0">
+            <div class="form-group col-md-6">
+                <label class="col-form-label" for="cities">Şehir</label>
+                <select class="custom-select form-control" id="cities">
+                    <option value="0">Seçiniz...</option>
+                    @foreach (City item in ViewBag.Cities)
+                    {
+                        <option value="@item.Id">@item.Name.ToUpper()</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="col-form-label" for="districts">İlçe</label>
+                <select name="DistrictId" class="custom-select form-control" id="districts" disabled>
+                </select>
+                <span asp-validation-for="DistrictId" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Address" class="col-sm-2 col-form-label">Adres</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Adres" asp-for="Address">
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Floor" class="col-sm-2 col-form-label">Kat</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" placeholder="Kat" asp-for="Floor">
+                <span asp-validation-for="Floor" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="NumberOfRooms" class="col-sm-2 col-form-label">Oda Sayısı</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" placeholder="Oda Sayısı" asp-for="NumberOfRooms">
+                <span asp-validation-for="NumberOfRooms" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row my-0">
+            <div class="form-group col-md-6">
+                <label class="col-form-label" for="estateTypes">Satış Türü</label>
+                <select name="EstateTypeId" class="custom-select form-control" id="estateTypes">
+                    <option value="0">Seçiniz...</option>
+                    @foreach (EstateType item in ViewBag.EstateTypes)
+                    {
+                        <option value="@item.Id">@item.Type</option>
+                    }
+                </select>
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+
+                
+            </div>
+            <div class="form-group col-md-6">
+                <label class="col-form-label" for="heatingTypes">Isınma Türü</label>
+                <select name="HeatingTypeId" class="custom-select form-control" id="heatingTypes">
+                    <option value="0">Seçiniz...</option>
+                    @foreach (HeatingType item in ViewBag.HeatingTypes)
+                    {
+                        <option value="@item.Id">@item.Type</option>
+                    }
+                </select>
+                <span asp-validation-for="HeatingTypeId" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="SquareMeter" class="col-sm-2 col-form-label">Metrekare</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" placeholder="Metrekare" asp-for="SquareMeter">
+                <span asp-validation-for="SquareMeter" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="TotalNumberOfBuildingFloors" class="col-sm-2 col-form-label">Bina Kat Sayısı</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" placeholder="Bina Kat Sayısı" asp-for="TotalNumberOfBuildingFloors">
+                <span asp-validation-for="TotalNumberOfBuildingFloors" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Price" class="col-sm-2 col-form-label">Ücret</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" placeholder="Ücret" asp-for="Price">
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row mt-5">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary d-inline">Kaydet</button>
+                <a type="button" asp-controller="Estate" asp-action="Index" class="btn btn-dark d-inline">İptal</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $("#cities").change(function () {
+            var cId = $("#cities option:selected").val();
+            $('#districts').html("");
+            if (cId == 0) {
+                $('#districts').prop("disabled", true);
+            }
+            else {
+                $.ajax({
+                url: "@Url.Action("GetDistricts", "Estate")",
+                method: "POST",
+                data: { cityId: cId },
+                success: function (response) {
+                    $('#districts').prop("disabled", false);
+                    $.each(response, function (key, value) {
+                        console.log();
+                        $('#districts').append("<option value=" + value.id + ">" + this.name + "</option>");
+                    });
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+            }
+        });
+
+    </script>
+}
+<script>
+
+
+
+
+</script>

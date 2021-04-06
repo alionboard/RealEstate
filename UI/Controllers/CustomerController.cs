@@ -37,7 +37,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        [Route("Ekle")]
+        [Route("Musteri-Ekle")]
         public IActionResult Add()
         {
             TempData["CustomerTypes"] = _customerTypes;
@@ -45,12 +45,13 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        [Route("Ekle")]
+        [Route("Musteri-Ekle")]
         public IActionResult Add(AddCustomerDto customerDto)
         {
             if (ModelState.IsValid)
             {
                 Customer customer = _mapper.Map<Customer>(customerDto);
+                _customerRepository.Add(customer);
 
                 foreach (int cType in customerDto.CustomerTypes)
                 {
@@ -59,11 +60,9 @@ namespace UI.Controllers
                         Customer = customer,
                         CustomerTypeId = cType
                     };
-                    customer.CustomerTypes.Add(customerTypeCustomer);
+                    _customerTypeCustomerRepository.Add(customerTypeCustomer);
                 }
 
-                _customerRepository.Add(customer);
-                _customerTypeCustomerRepository.AddAllTTypes(customer.CustomerTypes);
 
                 return RedirectToAction("Index");
             }
@@ -73,7 +72,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        [Route("Duzenle")]
+        [Route("Musteri-Duzenle")]
         public IActionResult Edit(int id)
         {
             TempData["CustomerTypes"] = _customerTypes;
@@ -83,7 +82,7 @@ namespace UI.Controllers
         }
 
         [HttpPost]
-        [Route("Duzenle")]
+        [Route("Musteri-Duzenle")]
         public IActionResult Edit(EditCustomerDto customerDto)
         {
             List<CustomerTypeCustomer> entitiesToAdd = new List<CustomerTypeCustomer>();
@@ -94,7 +93,7 @@ namespace UI.Controllers
             if (ModelState.IsValid)
             {
                 _customerTypeCustomerRepository.DeleteAllTTypes(x => x.CustomerId == customerDto.Id);
-                _customerTypeCustomerRepository.AddAllTTypes(entitiesToAdd);
+                entitiesToAdd.ForEach(x => { _customerTypeCustomerRepository.Add(x); });
 
                 Customer customer = _mapper.Map<Customer>(customerDto);
 
@@ -108,7 +107,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        [Route("Sil")]
+        [Route("Musteri-Sil")]
         public IActionResult Delete(int id)
         {
             var customerToDelete = _customerRepository.GetById(id);
@@ -117,7 +116,7 @@ namespace UI.Controllers
         }
 
         [HttpGet]
-        [Route("Detaylar")]
+        [Route("Musteri-Detaylar")]
         public IActionResult Details(int id)
         {
             return View(_customerRepository.GetById(id));

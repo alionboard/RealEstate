@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Services
@@ -30,7 +31,7 @@ namespace Business.Services
             _context.SaveChanges();
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null)
         {
             return _entities.AsEnumerable();
         }
