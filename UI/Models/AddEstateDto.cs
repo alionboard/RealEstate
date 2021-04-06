@@ -10,28 +10,24 @@ namespace UI.Models
     public class AddEstateDto
     {
         [Required(ErrorMessage = "Ücret alanı zorunludur.")]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         [Required(ErrorMessage = "Metrekare alanı zorunludur.")]
-        public double SquareMeter { get; set; }
-        [Required]
-        public int NumberOfRooms { get; set; }
-        [Required]
-        public int Floor { get; set; }
-        [Required]
-        public int TotalNumberOfBuildingFloors { get; set; }
-        [Required]
+        public double? SquareMeter { get; set; }
+        [Required(ErrorMessage = "Oda Sayısı alanı zorunludur.")]
+        public int? NumberOfRooms { get; set; }
+        [Required(ErrorMessage = "Kat alanı zorunludur.")]
+        public int? Floor { get; set; }
+        [Required(ErrorMessage = "Bina Kat Sayısı alanı zorunludur.")]
+        public int? TotalNumberOfBuildingFloors { get; set; }
+        [Required(ErrorMessage = "Adres alanı zorunludur.")]
         public string Address { get; set; }
-        [Required]
-        [Range(1, 2)]
+        [Range(1, 2, ErrorMessage = "Emlak Tipi alanı zorunludur.")]
         public int EstateTypeId { get; set; }
-        [Required(ErrorMessage = "Isınma Türü alanı zorunludur.")]
-        [Range(1, 5)]
+        [Range(1, 5, ErrorMessage = "Isınma Türü alanı zorunludur.")]
         public int HeatingTypeId { get; set; }
-        [Required(ErrorMessage = "Müşteri zorunludur.")]
-        [Range(1, int.MaxValue)]
+        [Range(1, int.MaxValue, ErrorMessage = "Müşteri alanı zorunludur.")]
         public int CustomerId { get; set; }
-        [Required(ErrorMessage = "İlçe alanı zorunludur.")]
-        [Range(1, 911)]
+        [Range(1, 911, ErrorMessage = "İlçe alanı zorunludur.")]
         public int DistrictId { get; set; }
     }
 }
