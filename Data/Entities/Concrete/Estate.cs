@@ -12,7 +12,7 @@ namespace Data.Entities.Concrete
             ModifiedDate = DateTime.UtcNow;
         }
         public int Id { get; set; }
-        public decimal Price { get; set; }
+        public int Price { get; set; }
         public double SquareMeter { get; set; }
         public int NumberOfRooms { get; set; }
         public int Floor { get; set; }

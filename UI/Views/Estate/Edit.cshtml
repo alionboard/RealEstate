@@ -1,14 +1,17 @@
-﻿@model AddEstateDto;
+﻿@model EditEstateDto;
 @{
-    ViewData["Title"] = "Emlak Ekle";
+    ViewData["Title"] = "Emlak Düzenle";
+    Console.WriteLine(Model.Price);
 }
 
+
 <div class="mt-3 mb-4">
-    <h3>Emlak Ekle</h3>
+    <h3>Emlak Düzenle</h3>
 </div>
 <hr />
 <div>
-    <form asp-controller="Estate" asp-action="Add" method="post">
+    <form asp-controller="Estate" asp-action="Edit" method="post">
+        <input type="hidden" asp-for="Id" />
         <div class="form-group row">
             <label class="col-form-label col-sm-2 col-form-label" for="districts">Müşteri</label>
             <select name="CustomerId" class="custom-select mx-3" id="customer">
@@ -84,7 +87,8 @@
                     @foreach (EstateType item in ViewBag.EstateTypes)
                     {
                         <!option value="@item.Id" @(Model != null && Model.EstateTypeId == item.Id ? "selected=\"selected\"" : "")>
-                        @item.Type</!option>
+                            @item.Type
+                        </!option>
                     }
                 </select>
                 <span asp-validation-for="EstateTypeId" class="text-danger"></span>
@@ -116,7 +120,9 @@
         <div class="form-group row mt-5">
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary d-inline">Kaydet</button>
-                <a type="button" asp-controller="Estate" asp-action="Index" class="btn btn-dark d-inline">İptal</a>
+                <a type="button" asp-controller="Estate" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger d-inline" onclick="return confirm('Bu emlağı silmek istediğinizden emin misiniz?')">Sil</a>
+                <a type="button" href="javascript:history.go(-1)" class="btn btn-dark d-inline">İptal</a>
+
             </div>
         </div>
     </form>

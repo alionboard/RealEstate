@@ -50,9 +50,9 @@
                 <thead>
                     <tr>
                         <th>Satış Türü</th>
+                        <th>Fiyat</th>
                         <th>İlçe</th>
                         <th>Şehir</th>
-                        <th>Oda Sayısı</th>
                         <th>Metrekare</th>
                         <th>İşlem</th>
                     </tr>
@@ -62,9 +62,9 @@
                     {
                         <tr>
                             <td>@item.EstateType.Type</td>
+                            <td>@item.Price</td>
                             <td>@item.District.Name</td>
                             <td>@item.District.City.Name</td>
-                            <td>@item.NumberOfRooms</td>
                             <td>@item.SquareMeter</td>
                             <td class="text-center">
                                 <a class="btn btn-outline-primary" asp-controller="Estate" asp-action="Details" asp-route-id="@item.Id"><i class="far fa-eye"></i></a>

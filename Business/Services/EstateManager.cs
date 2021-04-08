@@ -20,7 +20,13 @@ namespace Business.Services
 
         public Estate GetById(int id)
         {
-            throw new NotImplementedException();
+            var estates = _context.Estates
+                .Include(estate => estate.District).ThenInclude(district => district.City)
+                .Include(estate => estate.EstateType)
+                .Include(estate => estate.HeatingType)
+                .Include(estate => estate.Customer);
+
+            return estates.FirstOrDefault(x => x.Id == id);
         }
 
         public override IEnumerable<Estate> GetAll(Expression<Func<Estate, bool>> filter = null)
@@ -30,7 +36,6 @@ namespace Business.Services
                 .Include(estate => estate.EstateType);
 
             return estates.ToList();
-
         }
     }
 }

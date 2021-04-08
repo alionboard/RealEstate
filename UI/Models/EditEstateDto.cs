@@ -1,5 +1,4 @@
-﻿using Data.Entities.Concrete;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class AddEstateDto
+    public class EditEstateDto
     {
+        [Required]
+        public int Id { get; set; }
         [Required(ErrorMessage = "Ücret alanı zorunludur.")]
         public int? Price { get; set; }
         [Required(ErrorMessage = "Metrekare alanı zorunludur.")]

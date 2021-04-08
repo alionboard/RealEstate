@@ -17,6 +17,8 @@ namespace UI.Models
                 .ForMember(dest => dest.CustomerTypes, opt => opt.Ignore());
             CreateMap<AddEstateDto, Estate>();
             CreateMap<Estate, AddEstateDto>();
+            CreateMap<EditEstateDto, Estate>();
+            CreateMap<Estate, EditEstateDto>();
         }
     }
 }

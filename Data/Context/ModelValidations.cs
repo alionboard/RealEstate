@@ -18,7 +18,7 @@ namespace Data.Context
             });
             modelBuilder.Entity<Estate>(e => {
                 e.Property(es=>es.CustomerId).IsRequired();
-                e.Property(es => es.Price).IsRequired().HasColumnType("decimal(8,2)");
+                e.Property(es => es.Price).IsRequired();
                 e.Property(es=>es.DistrictId).IsRequired();
                 e.Property(es=>es.HeatingTypeId).IsRequired();
                 e.Property(es=>es.EstateTypeId).IsRequired();
